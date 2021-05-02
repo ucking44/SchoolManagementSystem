@@ -8,7 +8,9 @@ use App\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Str;
 use Flash;
+use Illuminate\Support\Facades\Mail;
 
 class StudentController extends Controller
 {
@@ -118,6 +120,53 @@ class StudentController extends Controller
         {
             return redirect()->back()->with('error', 'Password Failed To Update');
         }
+    }
+
+    public function getForgotPassword()
+    {
+        return view('admin.student.forget-password');
+    }
+
+    public function forgotPassword(Request $request)
+    {
+        $data = $request->all();
+        $studentCount = Admission::where('email', $data['email'])->count();
+
+        if($studentCount == 0)
+        {
+            return redirect()->back()->with('error', 'We Can\'t Find A Student With This E-mail Address....');
+        }
+        Session::put('studentSession');
+        $students = Admission::where('email', $data['email'])->first();
+        //dd($students); die;
+        $ran_password = Str::random(12);
+        $new_password = $ran_password;
+        Roll::where('username', Session::get('studentSession'))->update(['password' => $new_password]);
+
+        $email = $data['email'];
+        $student_name = $students->first_name;
+        $message = [
+            'email' => $email,
+            'first_name' => $student_name,
+            'password' => $ran_password
+        ];
+
+        Mail::send('emails.forgot-password', $message, function ($message) use($email) {
+            $message->to($email)->subject('Reset Password - Uc King Academy Information System');
+        });
+
+        return redirect()->back()->with('success', 'We Have E-mailed Your Password Reset Link To ' . $data['email']);
+        // Mail::send('Html.view', $data, function ($message) {
+        //     $message->from('john@johndoe.com', 'John Doe');
+        //     $message->sender('john@johndoe.com', 'John Doe');
+        //     $message->to('john@johndoe.com', 'John Doe');
+        //     $message->cc('john@johndoe.com', 'John Doe');
+        //     $message->bcc('john@johndoe.com', 'John Doe');
+        //     $message->replyTo('john@johndoe.com', 'John Doe');
+        //     $message->subject('Subject');
+        //     $message->priority(3);
+        //     $message->attach('pathToFile');
+        // });
     }
 
     public function account()

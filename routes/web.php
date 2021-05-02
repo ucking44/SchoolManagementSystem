@@ -39,6 +39,9 @@ Route::get('/logout', 'StudentController@studentLogout');
 
 Route::post('/student-login', 'StudentController@loginStudent');
 
+Route::get('/student-forgot-password', 'StudentController@getForgotPassword');
+Route::post('/forgot-password', 'StudentController@forgotPassword');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
@@ -78,6 +81,12 @@ Route::resource('classScheduling', 'ClassSchedulingController');
 Route::resource('teacher', 'TeacherController');
 
 Route::resource('student', 'StudentController');
+
+Route::resource('classAssigning', 'ClassAssigningController');
+
+//Route::post('insert', 'ClassAssigningController@insert');
+
+Route::post('insert', array('as' => 'insert', 'uses' => 'ClassAssigningController@insert'));
 
 
 
