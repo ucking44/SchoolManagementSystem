@@ -19,6 +19,7 @@ class CreateSemestersTable extends Migration
             $table->string('semester_code');
             $table->string('semester_duration');
             $table->longText('description');
+            $table->string('status')->default('disable');
             $table->timestamps();
         });
     }

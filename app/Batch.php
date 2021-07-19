@@ -8,8 +8,11 @@ class Batch extends Model
 {
     protected $table = 'batches';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'batch',
+        'status',
     ];
 
     public function admission()

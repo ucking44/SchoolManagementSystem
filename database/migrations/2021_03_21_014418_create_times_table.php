@@ -16,6 +16,7 @@ class CreateTimesTable extends Migration
         Schema::create('times', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('time');
+            $table->string('status')->default('disable');
             $table->timestamps();
         });
     }

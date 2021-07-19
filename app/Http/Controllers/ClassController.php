@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Classes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redirect;
 
 class ClassController extends Controller
 {
@@ -42,9 +44,17 @@ class ClassController extends Controller
         ]);
 
         $class = new Classes();
+        $class->user_id = Auth::user()->id;
         $class->class_name = $request->class_name;
         $class->class_code = $request->class_code;
+        if(isset($request->status))
+        {
+            $class->status = 'enable';
+        } else {
+            $class->status = 'disable';
+        }
         $class->save();
+
         return redirect()->route('class.index')->with('successMsg', 'Class Saved Successfully!');
     }
 
@@ -86,9 +96,17 @@ class ClassController extends Controller
         ]);
 
         $class = Classes::findOrFail($id);
+        $class->user_id = Auth::user()->id;
         $class->class_name = $request->class_name;
         $class->class_code = $request->class_code;
+        if(isset($request->status))
+        {
+            $class->status = 'enable';
+        } else {
+            $class->status = 'disable';
+        }
         $class->save();
+
         return redirect()->route('class.index')->with('successMsg', 'Class Updated Successfully!');
     }
 
@@ -104,4 +122,21 @@ class ClassController extends Controller
         $class->delete();
         return redirect()->route('class.index')->with('successMsg', 'Class Deleted Successfully!');
     }
+
+    public function unactive_class($id)
+    {
+        $unactive_class = Classes::findOrFail($id);
+        $unactive_class->update(['status' => 'disable']);
+        return Redirect::back()->with('successMsg', 'Class Un-activated Successfully ):');
+        // return Redirect::to('/class.index')->with('successMsg', 'Class Un-activated Successfully ):');
+    }
+
+    public function active_class($id)
+    {
+        $active_class = Classes::findOrFail($id);
+        $active_class->update(['status' => 'enable']);
+        return Redirect::back()->with('successMsg', 'Class Activated Successfully ):');
+        // return Redirect::to('/class.index')->with('successMsg', 'Class Activated Successfully ):');
+    }
+
 }

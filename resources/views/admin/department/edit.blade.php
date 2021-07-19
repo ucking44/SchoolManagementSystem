@@ -1,140 +1,82 @@
 @extends('layouts.backend.app')
 
-@push('css')
-
-@endpush
-
 @section('title', 'Department')
 
-@push('css')
-    <!-- Date -->
-    <link rel="stylesheet" href="{{ asset('asset/plugins/jquery-ui/jquery-ui.css') }}">
-@endpush
-
 @section('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-        <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Department</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item">Master</li>
-            <li class="breadcrumb-item active"> Department</li>
-            </ol>
-        </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
-
-        <div class="col-md-12">
-            <div class="card card-primary card-outline">
-                {{-- <div class="card-header card-header-primary">
-                    <h4 class="card-title "><b>Add New Department Year</b></h4>
-                </div> --}}
-                <div class="card-header">
-                    <h5 class="m-0" id="heading">
-                        @include('layouts.backend.partials.msg')
-                    </h5>
-                </div>
-                <form action="{{ route('department.update', $department->id) }}" id="company-form" method="POST">
-                    @csrf
-                    @method('put')
-                    <div class="card-body">
-
-                        <div class="row">
-                            <div class="col-6">
-                                <label for="faculty_name">Faculty Name</label>
-                                <select class="form-control" name="faculty_name">
-                                    @foreach($faculties as $faculty)
-                                        <option {{ $faculty->id == $department->faculty_id ? 'selected' : '' }} value="{{ $faculty->id }}">{{ $faculty->faculty_name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="col-6">
-                                <label for="department_name">Department Name</label>
-                                <input type="text" name="department_name" id="department_name" class="form-control" value="{{ $department->department_name }}">
-                            </div>
-
-                            <div class="col-6">
-                                <label for="department_code">Department Code</label>
-                                <input type="text" name="department_code" id="department_code" class="form-control" value="{{ $department->department_code }}">
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-12">
-                                <label for="department_description">Description</label>
-                                <textarea class="form-control" name="department_description" id="department_description" rows="4">{{ $department->department_description }}</textarea>
-                            </div>
-                        </div>
-
-                        <div class="col-3 mt-3">
-                            <label for="department_status" class="control-label">Status</label>
-                            <br/>
-                            {{-- <div class="controls"> --}}
-                              <input type="checkbox" name="department_status" id="department_status" {{ $department->department_status == "enable" ? 'checked' : '' }}>
-                            {{-- </div> --}}
-                        </div>
 
 
-                    </div>
-
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-6 text-left">
-                                <a href="{{ route('department.index') }}" class="btn btn-warning">Back</a>
-                            </div>
-
-                            <div class="col-6 text-right">
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Update Department</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                <div class="breadcrumb-item"><a href="#">Modules</a></div>
+                <div class="breadcrumb-item">Uc King</div>
             </div>
         </div>
 
+        <div class="section-body">
+            <form class="needs-validation" novalidate="" action="{{ route('department.update', $department->id) }}" method="POST">
+                @csrf
+                @method('put')
+
+                {{-- <div class="col-6 mt-4">
+                    <label for="faculty_name">Faculty Name</label>
+                    <select class="form-control" name="faculty_name">
+                        @foreach($faculties as $faculty)
+                            <option {{ $faculty->id == $department->faculty_id ? 'selected' : '' }} value="{{ $faculty->id }}">{{ $faculty->faculty_name }}</option>
+                        @endforeach
+                    </select>
+                </div> --}}
+
+                <div class="card-body">
+                    <label for="faculty_name"><b><h6>Faculty Name</h6></b></label>
+                    <select class="form-control col-md-6" name="faculty_name">
+                        @foreach($faculties as $faculty)
+                            <option {{ $faculty->id == $department->faculty_id ? 'selected' : '' }} value="{{ $faculty->id }}">{{ $faculty->faculty_name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4"><b><h6>Department Name</h6></b></label>
+                            <input type="text" name="department_name" id="inputEmail4" class="form-control" value="{{ $department->department_name }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4"><b><h6>Department Code</h6></b></label>
+                            <input type="text" name="department_code" id="inputEmail4" class="form-control" value="{{ $department->department_code }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label for="department_description"><b><h6>Description</h6></b></label>
+                        <textarea class="form-control" name="department_description" rows="4">{{ $department->department_description }}</textarea>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <a href="{{ route('department.index') }}" class="btn btn-warning">Back</a>
+                            <button style="float: right" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
 @endsection
 
-@push('js')
-
-<link rel="stylesheet" href="{{ asset('asset/plugins/jquery-ui/jquery-ui.js') }}">
-
-<script>
-    //$(function() {
-        //     $('#dob').datepicker({
-        //         autoclose:true,
-        //         dateFormat:'dd-mm-yy',
-        //     });
-        // })
-    $(function() {
-        $('#dob').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            //format: 'YYYY-MM-DD HH:mm:ss',
-            //dateFormat:'dd-mm-yy',
-            dateFormat: 'yy-mm-dd'
-        });
-    })
-    // function companyFormSubmit()
-    // {
-    //     var heading = $('#heading').val();
-    //     if (heading == 'Add new Company')
-    //     {
-    //         $('#company-form').attr('action', '').submit();
-    //     }
-    //     else
-    //     {
-    //         $('#company-form').attr('action', '').submit();
-    //     }
-    // }
-</script>
-
-@endpush
 

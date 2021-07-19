@@ -13,10 +13,13 @@ class Roll extends Model
 
     protected $fillable = [
         'student_id',
+        'semester_id',
         'username',
         'password',
         'login_time',
         'logout_time',
+        //'isonline',
+        //'ip_address',
     ];
 
     public static function onlineStudent()

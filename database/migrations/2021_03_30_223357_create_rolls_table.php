@@ -15,11 +15,13 @@ class CreateRollsTable extends Migration
     {
         Schema::create('rolls', function (Blueprint $table) {
             $table->bigIncrements('roll_id');
-            $table->bigInteger('student_id');
+            $table->unsignedBigInteger('student_id');
             $table->string('username');
             $table->string('password');
-            $table->dateTime('login_time');
-            $table->dateTime('logout_time');
+            $table->dateTime('login_time')->nullable();
+            $table->dateTime('logout_time')->nullable();
+            $table->integer('isonline')->default(0);
+            $table->integer('ip_address')->default(0);
             $table->timestamps();
         });
     }

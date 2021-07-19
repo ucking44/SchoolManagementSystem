@@ -2,209 +2,360 @@
 
 @section('title', 'Class Assigning')
 
-@push('css')
-   <!-- DataTables -->
-  <link rel="stylesheet" href="{{ asset('asset/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
-  <!-- iCheck for checkboxes and radio inputs -->
-  <link rel="stylesheet" href="{{ asset('asset/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('asset/plugins/jquery-ui/jquery-ui.css') }}">
-@endpush
-
 @section('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0 text-dark">Class Assigning</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item">Master</li>
-                    <li class="breadcrumb-item active">Class Assigning</li>
-                    </ol>
-                </div><!-- /.col -->
-            </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
 
-    <!-- Main content -->
-    <div class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <a href="{{ route('classAssigning.create') }}" class="btn btn-primary">Create Class Scheduling</a>
-                    @include('layouts.flash-message')
-                        <div class="card">
-                            <div class="card-header card-header-primary">
-                            <h4 class="card-title "><b>All Class Scheduling</b></h4>
-                            {{-- <p class="card-category"> Here is a subtitle for this table</p> --}}
-                            </div>
+<div class="modal fade left" id="addClassAssigningModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-notify modal-md modal-right" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-sun-o" aria-hidden="true"> Ad</i>d New Class Assigning</h5>
+                <button type="button" class="btn btn-warning float-right close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <form action="{{ URL::to('insert' ) }}" method="POST">
-                                                @csrf
-                                                <div class="col-md-12">
-                                                    <input type="hidden" name="class_assign_id" id="">
-                                                    <select name="teacher_id" id="" class="form-control" style="width: 50%; margin-top: 10px; float: right">
-                                                    <option value="0" selected="true" disabled="true">Select Teacher</option>
-                                                        @foreach ($teacher as $teach)
-                                                            <option value="{{$teach->teacher_id}}">
-                                                                {{$teach->name}}
-                                                                {{-- {{$teach->last_name}} --}}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </div>
-                                                <br>
+            <form class="needs-validation" novalidate="" action="{{ URL::to('classAssigning/store') }}" method="POST">
+                @csrf
 
+                <div class="modal-body">
+                    {{-- <input type="hidden" name="user_id" id="user_id" value="{{ Auth::user()->id }}" class="form-control"> --}}
 
-                                                <div class="clearfix"></div>
-                                                <br/>
-
-                                                <div class="card-body">
-                                                    <div class="table-responsive">
-                                                        <table id="table" class="table table-striped table-bordered" style="width:100%">
-                                                            <thead class=" text-primary">
-                                                                <th>ID</th>
-                                                                <th>Course Name</th>
-                                                                <th>Level</th>
-                                                                <th>Shift</th>
-                                                                <th>Class Name</th>
-                                                                <th>Class Room</th>
-                                                                <th>Batch</th>
-                                                                <th>Day</th>
-                                                                <th>Time</th>
-                                                                <th>Semester</th>
-                                                                <th>Start Time</th>
-                                                                <th>End Time</th>
-                                                                {{-- <th>Status</th>
-                                                                <th style="text-align: center">Actions</th> --}}
-                                                            </thead>
-                                                            <tbody>
-                                                                @foreach($classSchedules as $classSchedule)
-                                                                    <tr>
-                                                                        <td><input type="checkbox" name="multiclass[]" value="{{$classSchedule->id}}"></td>
-                                                                        {{-- <td>{{ $key + 1 }}</td> --}}
-                                                                        <td>{{ $classSchedule->course_name }}</td>
-                                                                        <td>{{ $classSchedule->level }}</td>
-                                                                        <td>{{ $classSchedule->shift }}</td>
-                                                                        <td>{{ $classSchedule->class_name }}</td>
-                                                                        <td>{{ $classSchedule->classroom_name }}</td>
-                                                                        <td>{{ $classSchedule->batch }}</td>
-                                                                        <td>{{ $classSchedule->name }}</td>
-                                                                        <td>{{ $classSchedule->time }}</td>
-                                                                        <td>{{ $classSchedule->semester_name }}</td>
-                                                                        <td>{{ date('d-m-Y', strtotime($classSchedule->start_date)) }}</td>
-                                                                        <td>{{ date('d-m-Y', strtotime($classSchedule->end_date)) }}</td>
-                                                                        {{-- <td>{{ $classSchedule->start_time }}</td>
-                                                                        <td>{{ $classSchedule->end_time }}</td> --}}
-                                                                    </tr>
-                                                                @endforeach
-                                                            </tbody>
-                                                        </table>
-                                                    </div>
-                                                    <br>
-                                                    <div>
-                                                        {{-- <button type="button" class="btn btn-warning">Close</button> --}}
-                                                        <button type="submit" class="btn btn-success float-right">Generate Class Assign</button>
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="col-md-12 mt-4">
+                        <div class="form-group">
+                            <label for="first_name">Teacher</label>
+                            <select name="first_name" class="form-control" required>
+                                <option value="">Select Teacher</option>
+                                @foreach ($teachers as $teach)
+                                    <option value="{{$teach->id}}">
+                                        {{$teach->first_name}}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
+                    </div>
 
-                            <div class="card-body">
-                                <div class="table-responsive">
-                                    <table id="table" class="table table-striped table-bordered" style="width:100%">
-                                        <thead class=" text-primary">
+                    <div class="col-md-12 mt-4">
+                        <div class="form-group">
+                            <label for="level">Level</label>
+                            <select name="level" class="form-control" required>
+                                <option value="">Select Level</option>
+                                @foreach ($levels as $level)
+                                    <option value="{{ $level->id }}">{{ $level->level }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <div class="form-group">
+                            <label for="course_name">Course</label>
+                            <select name="course_name" class="form-control" required>
+                                <option value="">Select Course</option>
+                                @foreach ($courses as $course)
+                                    <option value="{{ $course->id }}">{{ $course->course_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <div class="form-group">
+                            <label for="class_name">Class Name</label>
+                            <select name="class_name" class="form-control" required>
+                                <option value="">Select Class Name</option>
+                                @foreach($classes as $class)
+                                    <option value="{{ $class->id }}">{{ $class->class_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <div class="form-group">
+                            <label for="classroom_name">Class Room</label>
+                            <select name="classroom_name" class="form-control" required>
+                                <option value="">Select Class Room</option>
+                                @foreach($classrooms as $classroom)
+                                    <option value="{{ $classroom->id }}">{{ $classroom->classroom_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <div class="form-group">
+                            <label for="shift">Shift</label>
+                            <select name="shift" class="form-control" required>
+                                <option value="">Select Shift</option>
+                                @foreach($shifts as $shift)
+                                    <option value="{{ $shift->id }}">{{ $shift->shift }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <div class="form-group">
+                            <label for="batch">Batch</label>
+                            <select name="batch" class="form-control" required>
+                                <option value="">Select Batch</option>
+                                @foreach($batches as $batch)
+                                    <option value="{{ $batch->id }}">{{ $batch->batch }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <div class="form-group">
+                            <label for="day_name">Day</label>
+                            <select name="day_name" class="form-control" required>
+                                <option value="">Select Day</option>
+                                @foreach($days as $day)
+                                    <option value="{{ $day->id }}">{{ $day->day_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <div class="form-group">
+                            <label for="time">Time</label>
+                            <select name="time" class="form-control" required>
+                                <option value="">Select Time</option>
+                                @foreach($times as $time)
+                                    <option value="{{ $time->id }}">{{ $time->time }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mt-4">
+                        <div class="form-group">
+                            <label for="semester_name">Semester Name</label>
+                            <select name="semester_name" class="form-control" required>
+                                <option value="">Select Semester Name</option>
+                                @foreach ($semesters as $semester)
+                                    <option value="{{ $semester->id }}">{{ $semester->semester_name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="start_time">Start Time</label>
+                            {!! Form::time('start_time', null, ['class' => 'form-control', 'placeholder' => 'Enter Start Time Here', 'required']) !!}
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="end_time">End Time</label>
+                            {!! Form::time('end_time', null, ['class' => 'form-control', 'placeholder' => 'Enter End Time Here', 'required']) !!}
+                        </div>
+                    </div>
+
+                    {{-- <div class="section-title mt-0">Status</div> --}}
+                    <div class="col-md-12">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" name="status" class="custom-control-input" id="customCheck1" value="enable">
+                            <label class="custom-control-label" for="customCheck1">Status</label>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                        {!! Form::submit('Create Class Assigning', ['class' => 'btn btn-success']) !!}
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{{-- ---------------------------------------------------   EDIT MODAL FORM --------------------------------------------- --}}
+
+
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Class Assignings</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                <div class="breadcrumb-item"><a href="#">Modules</a></div>
+                <div class="breadcrumb-item">Uc King</div>
+            </div>
+        </div>
+
+        <div class="section-body">
+            {{-- @include('layouts.flash-message') --}}
+            {{-- <h2 class="section-title">DataTables</h2>
+            <p class="section-lead">We use 'DataTables' made by @SpryMedia. You can check the full documentation <a href="https://datatables.net/">here</a>.</p> --}}
+
+            <a href="#" style="float: right" class="btn btn-primary" data-toggle="modal" data-target="#addClassAssigningModal">Create Class Assigning</a>
+            <br/>
+            <br/>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4>Class Assigning</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped v_center" id="table-2">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Teacher</th>
+                                            <th>Semester</th>
+                                            <th>Course</th>
+                                            <th style="text-align: center">Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($classAssignings as $classAssigning)
                                             <tr>
-                                                {{-- <th>ID</th> --}}
-                                                <th>Teacher</th>
-                                                <th>Semester</th>
-                                                <th>Course</th>
-                                                <th>Details</th>
-                                                <th style="text-align: center">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($classAssignings as $classAssigning)
-                                                <tr>
-                                                    {{-- <td>{{ $key + 1 }}</td> --}}
-                                                    <td class="col-md-2">{{ $classAssigning->name }}</td>
-                                                    <td class="col-md-2">{{ $classAssigning->semester_name }}</td>
-                                                    <td class="col-md-3">{{ $classAssigning->course_name }}</td>
-                                                    <td>
-                                                        {{ $classAssigning->level }} | {{ $classAssigning->time }}
-                                                        {{ $classAssigning->name }} | {{ $classAssigning->class_name }}
-                                                        {{ $classAssigning->shift }} | {{ $classAssigning->batch }}
+                                                <th class="text-center">
+                                                    <i class="fas fa-th"></i>
+                                                </th>
+                                                {{-- <th class="text-center">
+                                                    <div class="custom-checkbox custom-control">
+                                                        <input type="checkbox" data-checkboxes="mygroup" data-checkbox-role="dad" class="custom-control-input" id="checkbox-all" name="status" {{ $academic->status == "enable" ? 'checked' : '' }}>
+                                                    <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
+                                                    </div>
+                                                </th> --}}
+                                                    <td>{{ $classAssigning->first_name }}</td>
+                                                    <td>{{ $classAssigning->last_name }}</td>
+                                                    <td>{{ $classAssigning->semester_name }}</td>
+                                                    <td>{{ $classAssigning->course_name }}</td>
+                                                    <td>{{ $classAssigning->class_name }} | {{ $classAssigning->batch }} |
+                                                        {{ $classAssigning->day_name }} | {{ $classAssigning->level }} |
+                                                        {{ $classAssigning->shift }} | {{ $classAssigning->time }} |
                                                         {{ $classAssigning->classroom_name }}
                                                     </td>
-                                                    <td style="text-align: center">
-                                                        <a href="{{ route('classAssigning.show', [$classAssigning->id]) }}" target="_blank" class='btn btn-warning btn-xs'>
-                                                            <span class="badge badge-warning">Show</span>
+                                                    <td>
+                                                        @if ($classAssigning->status == 'enable')
+                                                            <span class="badge badge-success">Active</span>
+                                                        @else
+                                                            <span class="badge badge-danger">In-active</span>
+                                                        @endif
+                                                    </td>
+                                                    <td style="text-align: center;">
+                                                        @if ($classAssigning->status == 'enable')
+                                                        <a href="{{ URL::to('/unactive_classAssigning/' . $classAssigning->id)}}">
+                                                            <span class="badge badge-primary">Inactive</span>
                                                         </a>
-                                                        <a href="{{ route('classAssigning.edit', $classAssigning->id)}}">
-                                                            <span class="badge badge-info" style="margin-right: 35px; margin-top: 35px;">Edit</span>
+                                                        @else
+                                                        <a href="{{ URL::to('/active_classAssigning/' . $classAssigning->id)}}">
+                                                            <span class="badge badge-success">Active</span>
                                                         </a>
+                                                        @endif
+
+                                                            <a href="{{ route('classAssigning.edit', $classAssigning->id)}}">
+                                                                <span class="badge badge-info">Edit</span>
+                                                            </a>
 
                                                         <form id="delete-form-{{ $classAssigning->id }}" method="POST" action="{{ route('classAssigning.destroy', $classAssigning->id) }}" style="display: none;">
                                                             @csrf
                                                             @method('delete')
                                                         </form>
-                                                        <button style="margin-left: 35px; margin-bottom: 15px;" type="button" class="btn btn-danger btn-sm" onclick="if(confirm('Are you sure you want to delete this data?')) {
+
+                                                        <a href="#" onclick="if(confirm('Are you sure you want to delete this data?')) {
                                                             event.preventDefault();
                                                             document.getElementById('delete-form-{{ $classAssigning->id }}').submit();
                                                         }
                                                         else {
                                                             event.preventDefault();
                                                         }">
-                                                        <span class="badge badge-danger">Delete</span>
-                                                        {{-- <i class="material-icons">delete</i></button> --}}
+                                                            <span class="badge badge-danger">Delete</span>
+                                                            {{-- <i class="badge badge-danger">delete</i> --}}
+                                                        </a>
                                                     </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </div>
-                            {{-- {{ $prosStudents->links() }} --}}
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
+                </div>
             </div>
-            {{ $classAssignings->links() }}
         </div>
-    </div>
-    <!-- /.content -->
+    </section>
+</div>
 
 @endsection
 
-@push('js')
-    <!-- DataTables -->
-    <script src="{{ asset('asset/plugins/datatables/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('asset/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
-    <link rel="stylesheet" href="{{ asset('asset/plugins/jquery-ui/jquery-ui.js') }}">
+
+{{--<div class="modal-body">
+    <div class="col-md-12">
+    <div class="form-group">
+        <select name="semester_name" id="semester_id" class="form-control">
+            <option value="">Select Semester</option>
+            @foreach ($semesters as $semester)
+                <option value="{{ $semester->id }}">{{ $semester->semester_name }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="form-group">
+        <select name="course_name" id="course_id" class="form-control">
+            <option value="">Select Course</option>
+            @foreach ($courses as $course)
+                <option value="{{ $course->id }}">{{ $course->course_name }}</option>
+            @endforeach
+        </select>
+    </div>
+</div>
+
+<div class="col-md-12">
+    <div class="form-group">
+        <select name="level" id="level_id" class="form-control">
+            <option value="">Select Level</option>
+            @foreach ($levels as $level)
+                <option value="{{ $level->id }}">{{ $level->level }}</option>
+            @endforeach
+        </select>
+    </div>
+</div> --}}
 
 
-    <script>
-        $(function() {
-            $('#startDate').datepicker({
-                autoclose:true,
-                dateFormat:'dd-mm-yy',
-            });
-            $('#endDate').datepicker({
-                autoclose:true,
-                dateFormat:'dd-mm-yy',
-            });
-        })
-    </script>
+{{-- <div class="col-md-12">
+    <div class="form-group"> --}}
+        {{-- <span class="input-group-addon">Day</span><br/> --}}
+        {{-- <label for="faculty_name">Faculty Name</label> --}}
+        {{-- {!! Form::label('fee', 'Fee:') !!} --}}
 
+        {{-- {!! Form::number('admissionFee', null, ['class' => 'form-control', 'placeholder' => 'Enter Admission Fee Here']) !!}
+    </div>
+</div>
 
+<div class="col-md-12">
+    <div class="form-group">
+        {!! Form::number('semesterFee', null, ['class' => 'form-control', 'placeholder' => 'Enter Semester Fee Here']) !!}
+    </div>
+</div> --}}
 
-@endpush
+<!-- Submit Field -->
+{{-- <div class="form-group col-sm-12">
+    {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}
+    <a href="#" class="btn btn-default">Cancel</a>
+</div> --}}
+
+{{-- <div class="form-group col-sm-6">
+    {!! Form::label('status', 'Status:') !!}
+    <label class="checkbox-inline">
+        {!! Form::hidden('status', 0) !!}
+        {!! Form::checkbox('status', '1', null) !!}
+    </label>
+</div>
+
+</div>
+<div class="modal-footer">
+<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+{!! Form::submit('Create Fee Structure', ['class' => 'btn btn-success']) !!}
+</div> --}}

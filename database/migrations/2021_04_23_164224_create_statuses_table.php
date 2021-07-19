@@ -16,6 +16,7 @@ class CreateStatusesTable extends Migration
         Schema::create('statuses', function (Blueprint $table) {
             $table->bigIncrements('status_id');
             $table->unsignedBigInteger('teacher_id');
+            $table->string('status')->default('disable');
             $table->timestamps();
         });
     }

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Flash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
 
 class StudentController extends Controller
 {
@@ -27,11 +28,20 @@ class StudentController extends Controller
         return view('admin.student.index', compact('students', 'admissions'));
     }
 
+    public function studentSession(Request $request)
+    {
+        $studentCount = Roll::where(['username' => Session::get('studentSession')])->count();
+        return view('welcome', compact('studentCount'));
+        //return view('admin.online-student-table', compact('studentCount'));
+    }
+
     public function studentBiodata(Request $request)
     {
         $students = Roll::join('admissions', 'admissions.id', '=', 'rolls.student_id')
                     ->where(['username' => Session::get('studentSession')])->first();
-        return view('admin.student.lectures.biodata', compact('students'));
+        //return view('admin.student.lectures.biodata', compact('students'));
+        return view('student.account', compact('students'));
+        // return view('student.profile', compact('students'));
     }
 
     public function studentChooseCourse(Request $request)
@@ -69,8 +79,10 @@ class StudentController extends Controller
             if ($studentCount > 0)
             {
                 Session::put('studentSession', $student['username']);
+                $ipaddress = $request->ip();
+                $isonline = Roll::where('username', Session::get('studentSession'))->update(['isonline' => 1, 'login_time' => Carbon::now(), 'ip_address' => $ipaddress]);
                 return redirect('/account')->with('successMsg', 'You Have Successfully Logged In!');
-
+                //return view('admin.student.account')->with('successMsg', 'You Have Successfully Logged In!');
             }
             else
             {
@@ -78,6 +90,23 @@ class StudentController extends Controller
             }
         }
         // return view('admin.student.account');
+    }
+
+    public function studentLogout(Request $request)
+    {
+        $ipaddress = $request->ip();
+        $isonline = Roll::where('username', Session::get('studentSession'))->update(['isonline' => 0, 'logout_time' => Carbon::now(), 'ip_address' => $ipaddress]);
+
+        Session::flush();
+        return Redirect::to('/')->with('successMsg', 'You Have Successfully Logged Out !!!');
+    }
+
+    public function languages($locale)
+    {
+        session()->put('locale', $locale);
+        return redirect()->back();
+        // Session::put('locale', $locale);
+        // return Redirect::back();
     }
 
     public function verifyPassword(Request $request)
@@ -99,6 +128,12 @@ class StudentController extends Controller
         }
 
         return view('admin.student.lectures.biodata', compact('students'));
+    }
+
+    public function passwordChange()
+    {
+        $students = Admission::all();
+        return view('student.change-password', compact('students'));
     }
 
     public function changePassword(Request $request)
@@ -179,7 +214,13 @@ class StudentController extends Controller
         {
             return redirect('/login-student')->with('successMsg', 'Please Login To Gain Access!');
         }
-        return view('admin.student.account', compact('student'));
+        //return view('admin.student.account', compact('student'));
+        return view('student.account', compact('student'));
+    }
+
+    public function welcome()
+    {
+        return view('welcome');
     }
 
     /**
@@ -203,12 +244,12 @@ class StudentController extends Controller
     {
         $this->validate($request, [
             'first_name' => 'required',
-            'fullname' => 'required',
+            'last_name' => 'required',
             'username' => 'required',
-            'email' => 'required | email',
-            'phone' => 'required | numeric',
+            // 'email' => 'required | email',
+            // 'phone' => 'required | numeric',
             'image' => 'required | file',
-            'address' => 'required',
+            //'address' => 'required',
 
         ]);
 
@@ -231,12 +272,12 @@ class StudentController extends Controller
 
         $student = new Student();
         $student->admission_id = $request->first_name;
-        $student->fullname = $request->fullname;
+        $student->admission_id = $request->last_name;
         $student->username = $request->username;
-        $student->email = $request->email;
-        $student->phone = $request->phone;
+        // $student->email = $request->email;
+        // $student->phone = $request->phone;
         $student->image = $imagename;
-        $student->address = $request->address;
+        //$student->address = $request->address;
 
         if(isset($request->status))
         {
@@ -283,12 +324,12 @@ class StudentController extends Controller
     {
         $this->validate($request, [
             'first_name' => 'required',
-            'fullname' => 'required',
+            'last_name' => 'required',
             'username' => 'required',
-            'email' => 'required | email',
-            'phone' => 'required | numeric',
+            // 'email' => 'required | email',
+            // 'phone' => 'required | numeric',
             'image' => 'required | file',
-            'address' => 'required',
+            //'address' => 'required',
 
         ]);
 
@@ -311,12 +352,12 @@ class StudentController extends Controller
         }
 
         $student->admission_id = $request->first_name;
-        $student->fullname = $request->fullname;
+        $student->admission_id = $request->last_name;
         $student->username = $request->username;
-        $student->email = $request->email;
-        $student->phone = $request->phone;
+        // $student->email = $request->email;
+        // $student->phone = $request->phone;
         $student->image = $imagename;
-        $student->address = $request->address;
+        //$student->address = $request->address;
 
         if(isset($request->status))
         {
@@ -340,5 +381,22 @@ class StudentController extends Controller
         $student->delete();
         return redirect()->route('student.index')->with('successMsg', 'Student Deleted Successfully!');
     }
+
+    public function unactive_student($id)
+    {
+        $unactive_student = Student::findOrFail($id);
+        $unactive_student->update(['status' => 'Married']);
+        return Redirect::back()->with('successMsg', 'Student Un-activated Successfully ):');
+        // return Redirect::to('/student.index')->with('successMsg', 'Student Un-activated Successfully ):');
+    }
+
+    public function active_student($id)
+    {
+        $active_student = Student::findOrFail($id);
+        $active_student->update(['status' => 'Single']);
+        return Redirect::back()->with('successMsg', 'Student Activated Successfully ):');
+        // return Redirect::to('/student.index')->with('successMsg', 'Student Activated Successfully ):');
+    }
+
 }
 

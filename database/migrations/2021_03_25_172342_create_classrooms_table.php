@@ -19,7 +19,6 @@ class CreateClassroomsTable extends Migration
             $table->string('classroom_code');
             $table->text('classroom_description');
             $table->string('status')->default('disable');
-            // $table->tinyInteger('classroom_status')->default(1);
             $table->timestamps();
         });
     }

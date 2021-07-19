@@ -7,6 +7,7 @@ use App\Classes;
 use App\ProspectiveStudent;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class AcademicController extends Controller
 {
@@ -45,9 +46,16 @@ class AcademicController extends Controller
 
         $academic = new Academic();
         $academic->academic_year = $request->academic_year;
+        if(isset($request->status))
+        {
+            $academic->status = 'enable';
+        } else {
+            $academic->status = 'disable';
+        }
+
         $academic->save();
 
-        return redirect()->route('academic.index')->with('successMsg', 'Academic Saved Successfully!');
+        return redirect()->route('academic.index')->with('success', 'Academic Saved Successfully!');
 
     }
 
@@ -89,8 +97,15 @@ class AcademicController extends Controller
 
         $academic = Academic::findOrFail($id);
         $academic->academic_year = $request->academic_year;
+        if(isset($request->status))
+        {
+            $academic->status = 'enable';
+        } else {
+            $academic->status = 'disable';
+        }
+
         $academic->save();
-        return redirect()->route('academic.index')->with('successMsg', 'Academic Updated Successfully!');
+        return redirect()->route('academic.index')->with('success', 'Academic Updated Successfully!');
     }
 
     /**
@@ -103,6 +118,23 @@ class AcademicController extends Controller
     {
         $academic = Academic::findOrFail($id);
         $academic->delete();
-        return redirect()->route('academic.index')->with('successMsg', 'Academic Deleted Successfully!');
+        return redirect()->route('academic.index')->with('success', 'Academic Deleted Successfully!');
     }
+
+    public function unactive_academic($id)
+    {
+        $unactive_academic = Academic::findOrFail($id);
+        $unactive_academic->update(['status' => 'disable']);
+        return Redirect::back()->with('success', 'Academic Un-activated Successfully ):');
+        // return Redirect::to('/academic.index')->with('success', 'Academic Un-activated Successfully ):');
+    }
+
+    public function active_academic($id)
+    {
+        $active_academic = Academic::findOrFail($id);
+        $active_academic->update(['status' => 'enable']);
+        return Redirect::back()->with('success', 'Academic Activated Successfully ):');
+        // return Redirect::to('/academic.index')->with('successMsg', 'Academic Activated Successfully ):');
+    }
+
 }

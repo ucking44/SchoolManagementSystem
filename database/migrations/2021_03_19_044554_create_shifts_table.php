@@ -16,6 +16,7 @@ class CreateShiftsTable extends Migration
         Schema::create('shifts', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('shift');
+            $table->string('status')->default('disable');
             $table->timestamps();
         });
     }

@@ -145,13 +145,11 @@
                             </div>
 
                         </div>
-                        <div class="col-3 mt-3">
+                        {{-- <div class="col-3 mt-3">
                             <label for="status" class="control-label">Status</label>
                             <br/>
-                            {{-- <div class="controls"> --}}
                             <input type="checkbox" name="status" id="enable" {{ $class_scheduling->status == "enable" ? 'checked' : '' }}>
-                            {{-- </div> --}}
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="card-footer">

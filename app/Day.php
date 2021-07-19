@@ -8,7 +8,10 @@ class Day extends Model
 {
     protected $table = 'days';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
-        'name',
+        'day_name',
+        'status',
     ];
 }

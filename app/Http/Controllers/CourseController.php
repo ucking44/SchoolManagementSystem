@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Course;
+use App\Level;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class CourseController extends Controller
 {
@@ -14,8 +16,9 @@ class CourseController extends Controller
      */
     public function index()
     {
+        $levels = Level::all();
         $courses = Course::simplePaginate(4);
-        return view('admin.course.index', compact('courses'));
+        return view('admin.course.index', compact('levels', 'courses'));
     }
 
     /**
@@ -25,7 +28,8 @@ class CourseController extends Controller
      */
     public function create()
     {
-        return view('admin.course.create');
+        $levels = Level::all();
+        return view('admin.course.create', compact('levels'));
     }
 
     /**
@@ -37,21 +41,23 @@ class CourseController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
+            'level' => 'required',
             'course_name' => 'required',
             'course_code' => 'required',
             'description' => 'required',
         ]);
 
         $course = new Course();
+        $course->level_id = $request->level;
         $course->course_name = $request->course_name;
         $course->course_code = $request->course_code;
         $course->description = $request->description;
 
-        if(isset($request->course_status))
+        if(isset($request->status))
         {
-            $course->course_status = 'enable';
+            $course->status = 'enable';
         } else {
-            $course->course_status = 'disable';
+            $course->status = 'disable';
         }
         $course->save();
         return redirect()->route('course.index')->with('successMsg', 'Course Saved Successfully!');
@@ -77,8 +83,9 @@ class CourseController extends Controller
      */
     public function edit($id)
     {
+        $levels = Level::all();
         $course = Course::findOrFail($id);
-        return view('admin.course.edit', compact('course'));
+        return view('admin.course.edit', compact('levels', 'course'));
     }
 
     /**
@@ -101,11 +108,11 @@ class CourseController extends Controller
         $course->course_code = $request->course_code;
         $course->description = $request->description;
 
-        if(isset($request->course_status))
+        if(isset($request->status))
         {
-            $course->course_status = 'enable';
+            $course->status = 'enable';
         } else {
-            $course->course_status = 'disable';
+            $course->status = 'disable';
         }
         $course->save();
         return redirect()->route('course.index')->with('successMsg', 'Course Updated Successfully!');
@@ -123,4 +130,21 @@ class CourseController extends Controller
         $course->delete();
         return redirect()->route('course.index')->with('successMsg', 'Course Deleted Successfully!');
     }
+
+    public function unactive_course($id)
+    {
+        $unactive_course = Course::findOrFail($id);
+        $unactive_course->update(['status' => 'disable']);
+        return Redirect::back()->with('successMsg', 'Course Un-activated Successfully ):');
+        // return Redirect::to('/course.index')->with('successMsg', 'Course Un-activated Successfully ):');
+    }
+
+    public function active_course($id)
+    {
+        $active_course = Course::findOrFail($id);
+        $active_course->update(['status' => 'enable']);
+        return Redirect::back()->with('successMsg', 'Course Activated Successfully ):');
+        // return Redirect::to('/course.index')->with('successMsg', 'Course Activated Successfully ):');
+    }
+
 }

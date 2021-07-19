@@ -3,23 +3,27 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\ProspectiveStudent;
 use App\Student;
+use App\Department;
 
 class Admission extends Model
 {
+    protected $table = 'admissions';
+
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'roll_no',
         'first_name',
         'last_name',
-        'father_name',
-        'mother_name',
         'phone',
         'gender',
         'email',
         'dob',
+        'localOfOrigin',
+        'stateOfOrigin',
         'current_address',
-        'nationality',
+        'country',
         'passport',
         'status',
         'dateregistered',
@@ -31,19 +35,20 @@ class Admission extends Model
         return $this->belongsTo(Classes::class);
     }
 
-    public function batch()
+    public function department()
     {
-        return $this->belongsTo(Batch::class);
+        return $this->belongsTo(Department::class);
     }
+
+    // public function batch()
+    // {
+    //     return $this->belongsTo(Batch::class); department_name
+    // }
 
     public function students()
     {
         return $this->hasMany(Student::class);
     }
 
-    // public function prospectiveStudent()
-    // {
-    //     return $this->belongsTo(ProspectiveStudent::class);
-    // }batch_id
 
 }

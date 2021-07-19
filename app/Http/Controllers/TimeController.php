@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Time;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class TimeController extends Controller
 {
@@ -14,7 +15,7 @@ class TimeController extends Controller
      */
     public function index()
     {
-        $times = Time::simplePaginate(3);
+        $times = Time::all();
         return view('admin.time.index', compact('times'));
     }
 
@@ -42,6 +43,13 @@ class TimeController extends Controller
 
         $time = new Time();
         $time->time = $request->time;
+        if(isset($request->status))
+        {
+            $time->status = 'enable';
+        } else {
+            $time->status = 'disable';
+        }
+
         $time->save();
         return redirect()->route('time.index')->with('successMsg', 'Time Saved Successfully!');
 
@@ -85,6 +93,13 @@ class TimeController extends Controller
 
         $time = Time::findOrFail($id);
         $time->time = $request->time;
+        if(isset($request->status))
+        {
+            $time->status = 'enable';
+        } else {
+            $time->status = 'disable';
+        }
+
         $time->save();
         return redirect()->route('time.index')->with('successMsg', 'Time Updated Successfully!');
 
@@ -103,4 +118,21 @@ class TimeController extends Controller
         return redirect()->route('time.index')->with('successMsg', 'Time Deleted Successfully!');
 
     }
+
+    public function unactive_time($id)
+    {
+        $unactive_time = Time::findOrFail($id);
+        $unactive_time->update(['status' => 'disable']);
+        return Redirect::back()->with('successMsg', 'Time Un-activated Successfully ):');
+        // return Redirect::to('/time.index')->with('successMsg', 'Time Un-activated Successfully ):');
+    }
+
+    public function active_time($id)
+    {
+        $active_time = Time::findOrFail($id);
+        $active_time->update(['status' => 'enable']);
+        return Redirect::back()->with('successMsg', 'Time Activated Successfully ):');
+        // return Redirect::to('/time.index')->with('successMsg', 'Time Activated Successfully ):');
+    }
+
 }

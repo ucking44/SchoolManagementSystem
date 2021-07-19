@@ -15,10 +15,11 @@ class CreateLevelsTable extends Migration
     {
         Schema::create('levels', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('course_id')->unsigned();
+            //$table->unsignedBigInteger('course_id')->unsigned();
             $table->string('level');
             $table->longText('level_description');
-            $table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
+            $table->string('status')->default('disable');
+            //$table->foreign('course_id')->references('id')->on('courses')->onDelete('cascade');
             $table->timestamps();
         });
     }

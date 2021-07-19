@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Semester;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class SemesterController extends Controller
 {
@@ -48,6 +49,13 @@ class SemesterController extends Controller
         $semester->semester_code = $request->semester_code;
         $semester->semester_duration = $request->semester_duration;
         $semester->description = $request->description;
+        if(isset($request->status))
+        {
+            $semester->status = 'enable';
+        } else {
+            $semester->status = 'disable';
+        }
+
         $semester->save();
         return redirect()->route('semester.index')->with('successMsg', 'Semester Saved Successfully!');
 
@@ -97,6 +105,13 @@ class SemesterController extends Controller
         $semester->semester_code = $request->semester_code;
         $semester->semester_duration = $request->semester_duration;
         $semester->description = $request->description;
+        if(isset($request->status))
+        {
+            $semester->status = 'enable';
+        } else {
+            $semester->status = 'disable';
+        }
+
         $semester->save();
         return redirect()->route('semester.index')->with('successMsg', 'Semester Updated Successfully!');
     }
@@ -113,4 +128,21 @@ class SemesterController extends Controller
         $semester->delete();
         return redirect()->route('semester.index')->with('successMsg', 'Semester Deleted Successfully!');
     }
+
+    public function unactive_semester($id)
+    {
+        $unactive_semester = Semester::findOrFail($id);
+        $unactive_semester->update(['status' => 'disable']);
+        return Redirect::back()->with('successMsg', 'Semester Un-activated Successfully ):');
+        // return Redirect::to('/semester.index')->with('successMsg', 'Semester Un-activated Successfully ):');
+    }
+
+    public function active_semester($id)
+    {
+        $active_semester = Semester::findOrFail($id);
+        $active_semester->update(['status' => 'enable']);
+        return Redirect::back()->with('successMsg', 'Semester Activated Successfully ):');
+        // return Redirect::to('/semester.index')->with('successMsg', 'Semester Activated Successfully ):');
+    }
+
 }

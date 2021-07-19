@@ -18,7 +18,7 @@ class CreateFacultiesTable extends Migration
             $table->string('faculty_name');
             $table->string('faculty_code')->unique();
             $table->longText('faculty_description');
-            $table->string('faculty_status')->default('disable');
+            $table->string('status')->default('disable');
             $table->timestamps();
         });
     }

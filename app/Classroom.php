@@ -8,6 +8,8 @@ class Classroom extends Model
 {
     protected $table = 'classrooms';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'classroom_name',
         'classroom_code',

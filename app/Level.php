@@ -9,10 +9,13 @@ class Level extends Model
 {
     protected $table = 'levels';
 
+    protected $primaryKey = 'id';
+
     protected $fillable = [
         'course_id',
         'level',
         'level_description',
+        'status',
     ];
 
     public function course()

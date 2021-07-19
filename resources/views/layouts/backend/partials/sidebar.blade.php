@@ -1,499 +1,168 @@
-<!-- Main Sidebar Container -->
-<aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="index3.html" class="brand-link">
-      <img src="{{ asset('asset/dist/img/AdminLTELogo.png') }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">AdminLTE 3</span>
-    </a>
-
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="{{ asset('asset/dist/img/user2-160x160.jpg') }}" class="img-circle elevation-2" alt="User Image">
+<div class="main-sidebar sidebar-style-3">
+    <aside id="sidebar-wrapper">
+        <div class="sidebar-brand">
+            <a href="index-2.html">CodiePie</a>
         </div>
-        <div class="info">
-          <a href="#" class="d-block">Alexander Pierce</a>
+        <div class="sidebar-brand sidebar-brand-sm">
+            <a href="index-2.html">CP</a>
         </div>
-      </div>
-
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
-               with font-awesome or any other icon font library -->
-               <li class="nav-item">
-                <a href="{{ url('/dashboard') }}" class="nav-link {{ Request::is('home*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-tachometer-alt"></i>
-                  <p>
-                    Dashboard
-                  </p>
-                </a>
-              </li>
-          <li class="nav-item has-treeview {{ Request::is('prospective-student*') ? 'menu-open' : '' }}">
-            {{-- <a href="#" class="nav-link {{ Request::is('prospective-student/vendor*') ? 'active' : '' }}"> --}}
-                <a href="#" class="nav-link {{ Request::is('prospective-student*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-th"></i>
-              <p>
-                Prospective Student
-                <i class="right fas fa-angle-left"></i>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-                <li class="nav-item">
-                    <a href="{{ route('prosstudent.create') }}" class="nav-link active">
-                      <i class="far fa-circle nav-icon"></i>
-                      <p>Create Prospective Student</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{ route('prosstudent.index') }}" class="nav-link active {{ Request::is('prospective-student*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>All Prospective Student</p>
-                    </a>
-                </li>
-
-            </ul>
-          </li>
-          {{-- <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Widgets
-                <span class="right badge badge-danger">New</span>
-              </p>
-            </a>
-          </li> --}}
-            <li class="nav-item has-treeview {{ Request::is('class*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('class*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Class
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('class.create') }}" class="nav-link {{ Request::is('class/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Class</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('class.index') }}" class="nav-link {{ Request::is('class/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>All Classes</p>
-                    </a>
-                </li>
+        <ul class="sidebar-menu">
+            <li class="menu-header">Dashboard</li>
+            <li class="dropdown active">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-fire"></i><span>Dashboard</span></a>
+                <ul class="dropdown-menu">
+                    {{-- <li><a class="nav-link" href="index-0.html">Analytics</a></li> --}}
+                    <li class="active"><a class="nav-link" href="index-2.html">Dashboard</a></li>
                 </ul>
             </li>
+            <li class="menu-header">E-School</li>
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Users</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="layout-default.html">Admin</a></li>
 
-            <li class="nav-item has-treeview {{ Request::is('admission*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('admission*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Admission
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('admission.create') }}" class="nav-link {{ Request::is('admission/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Admission</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('admission.index') }}" class="nav-link {{ Request::is('admission/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Admission List</p>
-                    </a>
-                </li>
+                    <li><a class="nav-link" href="{{ route('teacher.index') }}">Teacher</a></li>
                 </ul>
             </li>
-
-            <li class="nav-item has-treeview {{ Request::is('academic*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('academic*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Academic
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('academic.create') }}" class="nav-link {{ Request::is('academic/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Academic</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="{{ route('academic.index') }}" class="nav-link {{ Request::is('academic/index*') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Academics</p>
-                        </a>
-                    </li>
+            {{-- <li><a class="nav-link" href="blank.html"><i class="far fa-square"></i> <span>Blank Page</span></a></li> --}}
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-th"></i> <span>All Pages</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="{{ route('class.index') }}">Class</a></li>
+                    <li><a class="nav-link" href="{{ route('admission.index') }}">Admission</a></li>
+                    <li><a class="nav-link" href="{{ route('academic.index') }}">Academic</a></li>
+                    <li><a class="nav-link" href="{{ route('batch.index') }}">Batch</a></li>
+                    <li><a class="nav-link" href="{{ route('faculty.index') }}">Faculty</a></li>
+                    <li><a class="nav-link" href="{{ route('department.index') }}">Department</a></li>
+                    <li><a class="nav-link" href="{{ route('course.index') }}">Course</a></li>
+                    <li><a class="nav-link" href="{{ route('level.index') }}">Level</a></li>
+                    <li><a class="nav-link" href="{{ route('day.index') }}">Day</a></li>
+                    <li><a class="nav-link" href="{{ route('shift.index') }}">Shift</a></li>
+                    <li><a class="nav-link" href="{{  route('time.index')  }}">Time</a></li>
+                    <li><a class="nav-link" href="{{ url('feestructure') }}">Fee Structure</a></li>
+                    <li><a class="nav-link" href="{{ url('classAssigning') }}">Class Assigning</a></li>
+                    <li><a class="nav-link" href="{{ route('semester.index') }}">Semester</a></li>
+                    <li><a class="nav-link" href="{{ route('classroom.index') }}">Class Room</a></li>
+                    <li><a class="nav-link" href="{{  route('classScheduling.index')  }}">Class Scheduling</a></li>
+                    {{-- <li><a class="nav-link" href="bootstrap-progress.html">Progress</a></li>
+                    <li><a class="nav-link" href="bootstrap-table.html">Table</a></li>
+                    <li><a class="nav-link" href="bootstrap-tooltip.html">Tooltip</a></li>
+                    <li><a class="nav-link" href="bootstrap-typography.html">Typography</a></li> --}}
                 </ul>
             </li>
-
-            <li class="nav-item has-treeview {{ Request::is('batch*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('batch*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Batch
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('batch.create') }}" class="nav-link {{ Request::is('batch/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Batch</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('batch.index') }}" class="nav-link {{ Request::is('batch/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Batches</p>
-                    </a>
-                </li>
+            {{-- <li class="menu-header">CodiePie</li>
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-th-large"></i> <span>Components</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="components-article.html">Article</a></li>
+                    <li><a class="nav-link beep beep-sidebar" href="components-avatar.html">Avatar</a></li>
+                    <li><a class="nav-link" href="components-chat-box.html">Chat Box</a></li>
+                    <li><a class="nav-link beep beep-sidebar" href="components-empty-state.html">Empty State</a></li>
+                    <li><a class="nav-link" href="components-gallery.html">Gallery</a></li>
+                    <li><a class="nav-link beep beep-sidebar" href="components-hero.html">Hero</a></li>
+                    <li><a class="nav-link" href="components-multiple-upload.html">Multiple Upload</a></li>
+                    <li><a class="nav-link beep beep-sidebar" href="components-pricing.html">Pricing</a></li>
+                    <li><a class="nav-link" href="components-statistic.html">Statistic</a></li>
+                    <li><a class="nav-link" href="components-tab.html">Tab</a></li>
+                    <li><a class="nav-link" href="components-table.html">Table</a></li>
+                    <li><a class="nav-link" href="components-user.html">User</a></li>
+                    <li><a class="nav-link beep beep-sidebar" href="components-wizard.html">Wizard</a></li>
                 </ul>
             </li>
-
-            <li class="nav-item has-treeview {{ Request::is('faculty*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('faculty*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Faculty
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('faculty.create') }}" class="nav-link {{ Request::is('faculty/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Faculty</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('faculty.index') }}" class="nav-link {{ Request::is('faculty/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Faculties</p>
-                    </a>
-                </li>
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="far fa-file-alt"></i> <span>Forms</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="forms-advanced-form.html">Advanced Form</a></li>
+                    <li><a class="nav-link" href="forms-editor.html">Editor</a></li>
+                    <li><a class="nav-link" href="forms-validation.html">Validation</a></li>
                 </ul>
             </li>
-
-            <li class="nav-item has-treeview {{ Request::is('department*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('department*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Department
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('department.create') }}" class="nav-link {{ Request::is('department/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Department</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('department.index') }}" class="nav-link {{ Request::is('department/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Departments</p>
-                    </a>
-                </li>
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-map-marker-alt"></i> <span>Google Maps</span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="gmaps-advanced-route.html">Advanced Route</a></li>
+                    <li><a href="gmaps-draggable-marker.html">Draggable Marker</a></li>
+                    <li><a href="gmaps-geocoding.html">Geocoding</a></li>
+                    <li><a href="gmaps-geolocation.html">Geolocation</a></li>
+                    <li><a href="gmaps-marker.html">Marker</a></li>
+                    <li><a href="gmaps-multiple-marker.html">Multiple Marker</a></li>
+                    <li><a href="gmaps-route.html">Route</a></li>
+                    <li><a href="gmaps-simple.html">Simple</a></li>
                 </ul>
             </li>
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-plug"></i> <span>Modules</span></a>
+                <ul class="dropdown-menu">
+                    <li class="menu-sub-header">Apps</li>
+                    <li><a class="nav-link" href="modules-calendar.html">Calendar</a></li>
 
-            <li class="nav-item has-treeview {{ Request::is('course*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('course*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Course
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('course.create') }}" class="nav-link {{ Request::is('course/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Course</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('course.index') }}" class="nav-link {{ Request::is('course/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Course</p>
-                    </a>
-                </li>
+                    <li class="menu-sub-header">Charts</li>
+                    <li><a class="nav-link" href="modules-chartjs.html">ChartJS</a></li>
+                    <li><a class="nav-link" href="modules-apex-charts.html">Apex Charts</a></li>
+                    <li><a class="nav-link" href="modules-e-charts.html">E Charts</a></li>
+                    <li><a class="nav-link" href="modules-c3-charts.html">C3 Charts</a></li>
+                    <li><a class="nav-link" href="modules-knob-charts.html">Knob Charts</a></li>
+                    <li><a class="nav-link" href="modules-sparkline.html">Sparkline</a></li>
+                    <li class="menu-sub-header">Tables</li>
+                    <li><a class="nav-link" href="modules-datatables.html">DataTables</a></li>
+                    <li><a class="nav-link" href="modules-table-more.html">More</a></li>
+                    <li class="menu-sub-header">Font Icons</li>
+                    <li><a class="nav-link" href="modules-font-awesome.html">Font Awesome</a></li>
+                    <li><a class="nav-link" href="modules-line-icons.html">Line Icons</a></li>
+                    <li><a class="nav-link" href="modules-feather-icons.html">Feather Icons</a></li>
+                    <li><a class="nav-link" href="modules-ion-icons.html">Ion Icons</a></li>
+                    <li><a class="nav-link" href="modules-flag.html">Flag</a></li>
+                    <li><a class="nav-link" href="modules-weather-icon.html">Weather Icon</a></li>
+                    <li class="menu-sub-header">Other</li>
+                    <li><a class="nav-link" href="modules-owl-carousel.html">Owl Carousel</a></li>
+                    <li><a class="nav-link" href="modules-sweet-alert.html">Sweet Alert</a></li>
+                    <li><a class="nav-link" href="modules-toastr.html">Toastr</a></li>
+                    <li><a class="nav-link" href="modules-vector-map.html">Vector Map</a></li>
                 </ul>
             </li>
-
-            <li class="nav-item has-treeview {{ Request::is('level*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('level*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Level
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('level.create') }}" class="nav-link {{ Request::is('level/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Level</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('level.index') }}" class="nav-link {{ Request::is('level/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Level</p>
-                    </a>
-                </li>
+            <li class="menu-header">Pages</li>
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="far fa-user"></i> <span>Auth</span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="auth-forgot-password.html">Forgot Password</a></li>
+                    <li><a href="auth-login.html">Login</a></li>
+                    <li><a href="auth-register.html">Register</a></li>
+                    <li><a href="auth-reset-password.html">Reset Password</a></li>
                 </ul>
             </li>
-
-            <li class="nav-item has-treeview {{ Request::is('day*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('day*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Day
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('day.create') }}" class="nav-link {{ Request::is('day/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Day</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('day.index') }}" class="nav-link {{ Request::is('day/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Days</p>
-                    </a>
-                </li>
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-exclamation"></i> <span>Errors</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="errors-503.html">503</a></li>
+                    <li><a class="nav-link" href="errors-403.html">403</a></li>
+                    <li><a class="nav-link" href="errors-404.html">404</a></li>
+                    <li><a class="nav-link" href="errors-500.html">500</a></li>
                 </ul>
             </li>
-
-            {{-- <li class="nav-item has-treeview {{ Request::is('period*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('period*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Day
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('period.create') }}" class="nav-link {{ Request::is('period/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Day</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('period.index') }}" class="nav-link {{ Request::is('period/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>All Days</p>
-                    </a>
-                </li>
-                </ul>
-            </li> --}}
-
-            <li class="nav-item has-treeview {{ Request::is('shift*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('shift*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Shift
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('shift.create') }}" class="nav-link {{ Request::is('shift/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Shift</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('shift.index') }}" class="nav-link {{ Request::is('shift/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Shift</p>
-                    </a>
-                </li>
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-bicycle"></i> <span>Features</span></a>
+                <ul class="dropdown-menu">
+                    <li><a class="nav-link" href="features-activities.html">Activities</a></li>
+                    <li><a class="nav-link" href="features-post-create.html">Post Create</a></li>
+                    <li><a class="nav-link" href="features-posts.html">Posts</a></li>
+                    <li><a class="nav-link" href="features-profile.html">Profile</a></li>
+                    <li><a class="nav-link" href="features-settings.html">Settings</a></li>
+                    <li><a class="nav-link" href="features-setting-detail.html">Setting Detail</a></li>
+                    <li><a class="nav-link" href="features-tickets.html">Tickets</a></li>
                 </ul>
             </li>
-
-            <li class="nav-item has-treeview {{ Request::is('time*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('time*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Time
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('time.create') }}" class="nav-link {{ Request::is('time/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Time</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('time.index') }}" class="nav-link {{ Request::is('time/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Times</p>
-                    </a>
-                </li>
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown"><i class="fas fa-ellipsis-h"></i> <span>Utilities</span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="utilities-contact.html">Contact</a></li>
+                    <li><a class="nav-link" href="utilities-invoice.html">Invoice</a></li>
+                    <li><a href="utilities-subscribe.html">Subscribe</a></li>
                 </ul>
             </li>
-
-            <li class="nav-item has-treeview {{ Request::is('semester*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('semester*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Semester
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('semester.create') }}" class="nav-link {{ Request::is('semester/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Semester</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('semester.index') }}" class="nav-link {{ Request::is('semester/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Semesters</p>
-                    </a>
-                </li>
-                </ul>
-            </li>
-
-            <li class="nav-item has-treeview {{ Request::is('classroom*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('classroom*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Class Room
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('classroom.create') }}" class="nav-link {{ Request::is('classroom/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Class Room</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('classroom.index') }}" class="nav-link {{ Request::is('classroom/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Class Rooms</p>
-                    </a>
-                </li>
-                </ul>
-            </li>
-
-            <li class="nav-item has-treeview {{ Request::is('classScheduling*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('classScheduling*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Class Scheduling
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('classScheduling.create') }}" class="nav-link {{ Request::is('classScheduling/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Class Scheduling</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('classScheduling.index') }}" class="nav-link {{ Request::is('classScheduling/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Class Schedulings</p>
-                    </a>
-                </li>
-                </ul>
-            </li>
-
-            <li class="nav-item has-treeview {{ Request::is('teacher*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('teacher*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Teacher
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('teacher.create') }}" class="nav-link {{ Request::is('teacher/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Teacher</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('teacher.index') }}" class="nav-link {{ Request::is('teacher/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Teachers</p>
-                    </a>
-                </li>
-                </ul>
-            </li>
-
-            <li class="nav-item has-treeview {{ Request::is('student*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('student*') ? 'active' : '' }}">
-                    <i class="nav-icon fas fa-copy"></i>
-                    <p>
-                        Student
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="{{ route('student.create') }}" class="nav-link {{ Request::is('student/create*') ? 'active' : '' }}">
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Create Student</p>
-                        </a>
-                    </li>
-                <li class="nav-item">
-                    <a href="{{ route('student.index') }}" class="nav-link {{ Request::is('student/index*') ? 'active' : '' }}">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Students</p>
-                    </a>
-                </li>
-                </ul>
-            </li>
-
-            <li class="nav-item has-treeview {{ Request::is('stock/report*') ? 'menu-open' : '' }}">
-                <a href="#" class="nav-link {{ Request::is('stock/report*') ? 'active' : '' }}">
-                <i class="nav-icon fas fa-chart-pie"></i>
-                <p>
-                    Reports
-                    <i class="right fas fa-angle-left"></i>
-                </p>
-                </a>
-                <ul class="nav nav-treeview">
-                    <li class="nav-item">
-                        <a href="" class="nav-link {{ Request::is('stock/report*') ? 'active' : '' }}">
-                        <i class="far fa-circle nav-icon"></i>
-                        <p>Stock Reports</p>
-                        </a>
-                    </li>
-                </ul>
-            </li>
+            <li><a class="nav-link" href="credits.html"><i class="fas fa-pencil-ruler"></i> <span>Credits</span></a></li> --}}
         </ul>
-        </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-</aside>
+        {{-- <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
+            <a href="https://getcodiepie.com/docs" class="btn btn-primary btn-lg btn-block btn-icon-split"><i class="fas fa-rocket"></i> Documentation</a>
+        </div> --}}
+    </aside>
+</div>

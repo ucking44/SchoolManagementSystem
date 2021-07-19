@@ -3,14 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\ClassAssigning;
 
 class ClassScheduling extends Model
 {
     protected $table = 'class_schedulings';
 
-    // protected $fillable = [
-    //     'time',
-    // ];
+    protected $primaryKey = 'id';
 
     public function course()
     {
@@ -57,16 +56,10 @@ class ClassScheduling extends Model
         return $this->belongsTo(Semester::class);
     }
 
+    public function classAssignings()
+    {
+        return $this->hasMany(ClassAssigning::class);
+    }
+
 }
 
-
-// $table->bigInteger('course_id');
-//             $table->bigInteger('level_id');
-//             $table->bigInteger('shift_id');
-//             $table->bigInteger('class_id');
-//             $table->bigInteger('classroom_id');
-//             $table->bigInteger('batch_id');
-//             $table->bigInteger('day_id');
-//             $table->bigInteger('time_id');
-//             //$table->bigInteger('teacher_id');
-//             $table->bigInteger('semester_id');

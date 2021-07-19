@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Teacher;
 
 class Status extends Model
 {
@@ -13,5 +14,11 @@ class Status extends Model
     protected $fillable = [
         'teacher_id',
     ];
+
+    public function teacher()
+    {
+        return $this->belongsTo(Teacher::class);
+    }
+
 }
 

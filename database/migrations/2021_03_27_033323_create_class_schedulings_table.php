@@ -15,6 +15,7 @@ class CreateClassSchedulingsTable extends Migration
     {
         Schema::create('class_schedulings', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('teacher_id');
             $table->bigInteger('course_id');
             $table->bigInteger('level_id');
             $table->bigInteger('shift_id');
@@ -23,7 +24,8 @@ class CreateClassSchedulingsTable extends Migration
             $table->bigInteger('batch_id');
             $table->bigInteger('day_id');
             $table->bigInteger('time_id');
-            //$table->bigInteger('teacher_id');
+            $table->bigInteger('faculty_id');
+            $table->bigInteger('department_id');
             $table->bigInteger('semester_id');
             $table->time('start_time');
             $table->time('end_time');

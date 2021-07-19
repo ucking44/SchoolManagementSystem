@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Faculty;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class FacultyController extends Controller
 {
@@ -40,7 +41,7 @@ class FacultyController extends Controller
             'faculty_name',
             'faculty_code',
             'faculty_description',
-            'faculty_status',
+            'status',
         ]);
 
         $faculty = new Faculty();
@@ -48,11 +49,11 @@ class FacultyController extends Controller
         $faculty->faculty_code = $request->faculty_code;
         $faculty->faculty_description = $request->faculty_description;
 
-        if(isset($request->faculty_status))
+        if(isset($request->status))
         {
-            $faculty->faculty_status = 'enable';
+            $faculty->status = 'enable';
         } else {
-            $faculty->faculty_status = 'disable';
+            $faculty->status = 'disable';
         }
         $faculty->save();
         return redirect()->route('faculty.index')->with('successMsg', 'Faculty Saved Successfully!');
@@ -95,7 +96,7 @@ class FacultyController extends Controller
             'faculty_name',
             'faculty_code',
             'faculty_description',
-            'faculty_status',
+            'status',
         ]);
 
         $faculty = Faculty::findOrFail($id);
@@ -103,14 +104,14 @@ class FacultyController extends Controller
         $faculty->faculty_code = $request->faculty_code;
         $faculty->faculty_description = $request->faculty_description;
 
-        if(isset($request->faculty_status))
+        if(isset($request->status))
         {
-            $faculty->faculty_status = 'enable';
+            $faculty->status = 'enable';
         } else
         {
-            $faculty->faculty_status = 'disable';
+            $faculty->status = 'disable';
         }
-        
+
         $faculty->save();
         return redirect()->route('faculty.index')->with('successMsg', 'Faculty Updated Successfully!');
     }
@@ -128,4 +129,21 @@ class FacultyController extends Controller
         return redirect()->route('faculty.index')->with('successMsg', 'Faculty Deleted Successfully!');
 
     }
+
+    public function unactive_faculty($id)
+    {
+        $unactive_faculty = Faculty::findOrFail($id);
+        $unactive_faculty->update(['status' => 'disable']);
+        return Redirect::back()->with('successMsg', 'Faculty Un-activated Successfully ):');
+        // return Redirect::to('/faculty.index')->with('successMsg', 'Faculty Un-activated Successfully ):');
+    }
+
+    public function active_faculty($id)
+    {
+        $active_faculty = Faculty::findOrFail($id);
+        $active_faculty->update(['status' => 'enable']);
+        return Redirect::back()->with('successMsg', 'Faculty Activated Successfully ):');
+        // return Redirect::to('/faculty.index')->with('successMsg', 'Faculty Activated Successfully ):');
+    }
+
 }

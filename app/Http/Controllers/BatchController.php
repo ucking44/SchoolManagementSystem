@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Batch;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class BatchController extends Controller
 {
@@ -42,6 +43,13 @@ class BatchController extends Controller
 
         $batch = new Batch();
         $batch->batch = $request->batch;
+        if(isset($request->status))
+        {
+            $batch->status = 'enable';
+        } else {
+            $batch->status = 'disable';
+        }
+
         $batch->save();
         return redirect()->route('batch.index')->with('successMsg', 'Batch Saved Successfully!');
     }
@@ -84,6 +92,13 @@ class BatchController extends Controller
 
         $batch = Batch::findOrFail($id);
         $batch->batch = $request->batch;
+        if(isset($request->status))
+        {
+            $batch->status = 'enable';
+        } else {
+            $batch->status = 'disable';
+        }
+
         $batch->save();
         return redirect()->route('batch.index')->with('successMsg', 'Batch Updated Successfully!');
     }
@@ -100,4 +115,21 @@ class BatchController extends Controller
         $batch->delete();
         return redirect()->route('batch.index')->with('successMsg', 'Batch Deleted Successfully!');
     }
+
+    public function unactive_batch($id)
+    {
+        $unactive_batch = Batch::findOrFail($id);
+        $unactive_batch->update(['status' => 'disable']);
+        return Redirect::back()->with('successMsg', 'Batch Un-activated Successfully ):');
+        // return Redirect::to('/batch.index')->with('successMsg', 'Batch Un-activated Successfully ):');
+    }
+
+    public function active_batch($id)
+    {
+        $active_batch = Batch::findOrFail($id);
+        $active_batch->update(['status' => 'enable']);
+        return Redirect::back()->with('successMsg', 'Batch Activated Successfully ):');
+        // return Redirect::to('/batch.index')->with('successMsg', 'Batch Activated Successfully ):');
+    }
+
 }

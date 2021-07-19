@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Department;
 use App\Faculty;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class DepartmentController extends Controller
 {
@@ -52,11 +53,11 @@ class DepartmentController extends Controller
         $department->department_code = $request->department_code;
         $department->department_description = $request->department_description;
 
-        if(isset($request->department_status))
+        if(isset($request->status))
         {
-            $department->department_status = 'enable';
+            $department->status = 'enable';
         } else {
-            $department->department_status = 'disable';
+            $department->status = 'disable';
         }
         $department->save();
         return redirect()->route('department.index')->with('successMsg', 'Department Saved Successfully!');
@@ -109,11 +110,11 @@ class DepartmentController extends Controller
         $department->department_code = $request->department_code;
         $department->department_description = $request->department_description;
 
-        if(isset($request->department_status))
+        if(isset($request->status))
         {
-            $department->department_status = 'enable';
+            $department->status = 'enable';
         } else {
-            $department->department_status = 'disable';
+            $department->status = 'disable';
         }
         $department->save();
         return redirect()->route('department.index')->with('successMsg', 'Department Updated Successfully!');
@@ -131,4 +132,22 @@ class DepartmentController extends Controller
         $department->delete();
         return redirect()->route('department.index')->with('successMsg', 'Department Deleted Successfully!');
     }
+
+    public function unactive_department($id)
+    {
+        $unactive_department = Department::findOrFail($id);
+        $unactive_department->update(['status' => 'disable']);
+        return Redirect::back()->with('successMsg', 'Department Un-activated Successfully ):');
+        // return Redirect::to('/department.index')->with('successMsg', 'Department Un-activated Successfully ):');
+    }
+
+    public function active_department($id)
+    {
+        $active_department = Department::findOrFail($id);
+        $active_department->update(['status' => 'enable']);
+        return Redirect::back()->with('successMsg', 'Department Activated Successfully ):');
+        // return Redirect::to('/department.index')->with('successMsg', 'Department Activated Successfully ):');
+    }
+
 }
+

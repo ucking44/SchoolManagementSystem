@@ -1,105 +1,48 @@
 @extends('layouts.backend.app')
 
-@push('css')
-
-@endpush
-
 @section('title', 'Day')
 
-@push('css')
-    <!-- Date -->
-    <link rel="stylesheet" href="{{ asset('asset/plugins/jquery-ui/jquery-ui.css') }}">
-@endpush
-
 @section('content')
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-        <div class="col-sm-6">
-            <h1 class="m-0 text-dark">Day</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item">Master</li>
-            <li class="breadcrumb-item active"> Day</li>
-            </ol>
-        </div><!-- /.col -->
-        </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-    </div>
-    <!-- /.content-header -->
 
-        <div class="col-md-12">
-            <div class="card card-primary card-outline">
-                {{-- <div class="card-header card-header-primary">
-                    <h4 class="card-title "><b>Add New Day Year</b></h4>
-                </div> --}}
-                <div class="card-header">
-                    <h5 class="m-0" id="heading">
-                        @include('layouts.backend.partials.msg')
-                    </h5>
-                </div>
-                <form action="{{ route('day.update', $day->id) }}" id="company-form" method="POST">
-                    @csrf
-                    @method('put')
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-4">
-                                <label for="name">Name</label>
-                                <input type="text" name="name" id="name" class="form-control" value="{{ $day->name }}">
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class="col-6 text-left">
-                                <a href="{{ route('day.index') }}" class="btn btn-warning">Back</a>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+<div class="main-content">
+    <section class="section">
+        <div class="section-header">
+            <h1>Update Day</h1>
+            <div class="section-header-breadcrumb">
+                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                <div class="breadcrumb-item"><a href="#">Modules</a></div>
+                <div class="breadcrumb-item">Uc King</div>
             </div>
         </div>
 
+        <div class="section-body">
+            <form class="needs-validation" novalidate="" action="{{ route('day.update', $day->id) }}" method="POST">
+                @csrf
+                @method('put')
+
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-6">
+                            <label for="inputEmail4"><b><h6>Name</h6></b></label>
+                            <input type="text" name="day_name" id="inputEmail4" class="form-control" value="{{ $day->day_name }}">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <a href="{{ route('day.index') }}" class="btn btn-warning">Back</a>
+                            <button style="float: right" type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>
+
 @endsection
 
-@push('js')
-
-<link rel="stylesheet" href="{{ asset('asset/plugins/jquery-ui/jquery-ui.js') }}">
-
-<script>
-    //$(function() {
-        //     $('#dob').datepicker({
-        //         autoclose:true,
-        //         dateFormat:'dd-mm-yy',
-        //     });
-        // })
-    $(function() {
-        $('#dob').datepicker({
-            changeMonth: true,
-            changeYear: true,
-            //format: 'YYYY-MM-DD HH:mm:ss',
-            //dateFormat:'dd-mm-yy',
-            dateFormat: 'yy-mm-dd'
-        });
-    })
-    // function companyFormSubmit()
-    // {
-    //     var heading = $('#heading').val();
-    //     if (heading == 'Add new Company')
-    //     {
-    //         $('#company-form').attr('action', '').submit();
-    //     }
-    //     else
-    //     {
-    //         $('#company-form').attr('action', '').submit();
-    //     }
-    // }
-</script>
-
-@endpush
 

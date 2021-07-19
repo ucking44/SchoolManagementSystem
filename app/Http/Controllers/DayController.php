@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Day;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class DayController extends Controller
 {
@@ -14,7 +15,8 @@ class DayController extends Controller
      */
     public function index()
     {
-        $days = Day::simplePaginate(3);
+        // $days = Day::simplePaginate(3);
+        $days = Day::all();
         return view('admin.day.index', compact('days'));
     }
 
@@ -37,11 +39,18 @@ class DayController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'day_name' => 'required',
         ]);
 
         $day = new Day();
-        $day->name = $request->name;
+        $day->day_name = $request->day_name;
+        if(isset($request->status))
+        {
+            $day->status = 'enable';
+        } else {
+            $day->status = 'disable';
+        }
+
         $day->save();
         return redirect()->route('day.index')->with('successMsg', 'Day Saved Successfully!');
     }
@@ -79,11 +88,18 @@ class DayController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'required',
+            'day_name' => 'required',
         ]);
 
         $day = Day::findOrFail($id);
-        $day->name = $request->name;
+        $day->day_name = $request->day_name;
+        if(isset($request->status))
+        {
+            $day->status = 'enable';
+        } else {
+            $day->status = 'disable';
+        }
+
         $day->save();
         return redirect()->route('day.index')->with('successMsg', 'Day Updated Successfully!');
     }
@@ -100,4 +116,21 @@ class DayController extends Controller
         $day->delete();
         return redirect()->route('day.index')->with('successMsg', 'Day Deleted Successfully!');
     }
+
+    public function unactive_day($id)
+    {
+        $unactive_day = Day::findOrFail($id);
+        $unactive_day->update(['status' => 'disable']);
+        return Redirect::back()->with('successMsg', 'Day Un-activated Successfully ):');
+        // return Redirect::to('/day.index')->with('successMsg', 'Day Un-activated Successfully ):');
+    }
+
+    public function active_day($id)
+    {
+        $active_day = Day::findOrFail($id);
+        $active_day->update(['status' => 'enable']);
+        return Redirect::back()->with('successMsg', 'Day Activated Successfully ):');
+        // return Redirect::to('/day.index')->with('successMsg', 'Day Activated Successfully ):');
+    }
+
 }

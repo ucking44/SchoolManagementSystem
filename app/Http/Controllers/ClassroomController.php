@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Classroom;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class ClassroomController extends Controller
 {
@@ -14,7 +15,8 @@ class ClassroomController extends Controller
      */
     public function index()
     {
-        $classrooms = Classroom::simplePaginate(3);
+        // $classrooms = Classroom::simplePaginate(3);
+        $classrooms = Classroom::all();
         return view('admin.classroom.index', compact('classrooms'));
     }
 
@@ -122,5 +124,22 @@ class ClassroomController extends Controller
         return redirect()->route('classroom.index')->with('successMsg', 'Class Room Deleted Successfully!');
 
     }
+
+    public function unactive_classroom($id)
+    {
+        $unactive_classroom = Classroom::findOrFail($id);
+        $unactive_classroom->update(['status' => 'disable']);
+        return Redirect::back()->with('successMsg', 'Class Room Un-activated Successfully ):');
+        // return Redirect::to('/classroom.index')->with('successMsg', 'Class Room Un-activated Successfully ):');
+    }
+
+    public function active_classroom($id)
+    {
+        $active_classroom = Classroom::findOrFail($id);
+        $active_classroom->update(['status' => 'enable']);
+        return Redirect::back()->with('successMsg', 'Class Room Activated Successfully ):');
+        // return Redirect::to('/classroom.index')->with('successMsg', 'Class Room Activated Successfully ):');
+    }
+
 }
 

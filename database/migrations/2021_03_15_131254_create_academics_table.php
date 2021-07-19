@@ -16,6 +16,7 @@ class CreateAcademicsTable extends Migration
         Schema::create('academics', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('academic_year');
+            $table->string('status')->default('disable');
             $table->timestamps();
         });
     }

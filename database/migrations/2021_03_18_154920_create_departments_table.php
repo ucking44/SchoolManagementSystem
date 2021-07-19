@@ -19,7 +19,7 @@ class CreateDepartmentsTable extends Migration
             $table->string('department_name');
             $table->string('department_code')->unique();
             $table->longText('department_description');
-            $table->string('department_status')->default('disable');
+            $table->string('status')->default('disable');
             $table->timestamps();
         });
     }
